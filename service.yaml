@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+    cloud.google.com/load-balancer-type: "Internal"
+  creationTimestamp: "2022-01-23T16:02:37Z"
+  name: redis-service-internal
+  namespace: default
+  resourceVersion: "17933614"
+spec:
+
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    run: redis
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}

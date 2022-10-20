@@ -1,0 +1,7 @@
+version: '3.5'
+
+services: 
+  redis: 
+    image: sneyd321/redis
+    ports:
+     - 6379:6379
