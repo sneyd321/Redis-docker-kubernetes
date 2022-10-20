@@ -1,0 +1,4 @@
+.terraform/
+venv/
+.terraform.lock.hcl
+Capture.PNG

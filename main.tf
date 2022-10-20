@@ -1,8 +1,3 @@
-variable "project_id" {
-  type        = string
-  description = "GCP Project ID"
-}
-
 terraform {
   required_providers {
     google = {
@@ -13,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_id
+  project = "roomr-222721"
   region  = "us-central1"
   zone    = "us-central1-a"
 }
@@ -25,7 +20,7 @@ module "gce-container" {
   
 
   container = {
-    name = "mysql"
+    name = "redis"
     image = "us-central1-docker.pkg.dev/roomr-222721/roomr-docker-repo/redis"
   }
   
@@ -34,8 +29,8 @@ module "gce-container" {
 }
 
 
-resource "google_compute_instance" "mysql-instance-1" {
-    name         = "mysql-instance-1"
+resource "google_compute_instance" "redis-instance-1" {
+    name         = "redis-instance-1"
     machine_type = "e2-micro"
     zone         = "us-central1-a"
     allow_stopping_for_update = true
@@ -51,16 +46,16 @@ resource "google_compute_instance" "mysql-instance-1" {
     boot_disk {
         auto_delete = true
         initialize_params {
-            
             image = module.gce-container.source_image
             type = "pd-standard"
-            size = 30
+            size = 10
         }
     }
     tags = ["redis-server"]
 
   network_interface {
     network = "default"
+    
   }
 
   service_account {
